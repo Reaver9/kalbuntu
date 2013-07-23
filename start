@@ -1,0 +1,129 @@
+#!/bin/bash
+####################################################################################
+###                             KALBUNTU v1.0                                    ###
+###                              By Reaver9                                      ###
+###                                                                              ###
+###       These files are currently only tested on UBUNTU 12.04.2 LTS i386       ###
+###            Only intended for fresh unupdated installs....any other           ###
+###            versions or non-fresh installs is done at your own risk           ###
+###                                                                              ###
+####################################################################################
+
+
+###initial ubuntu 12.04Lts i386 upgrade
+
+
+
+echo 'First lets make sure you have all current upgrades for 
+your system...'
+sleep 3
+clear
+echo 'Please be patient...This may take some time...and remember this 
+will not install proprietary drivers like Nvidia or AMD drivers.'
+sleep 4
+clear
+
+sudo apt-get update
+
+sleep 4
+
+clear
+
+###add in various packages and remove others that dont work so well
+
+sudo apt-get --yes install wicd
+sudo apt-get --yes remove network-manager
+
+      ###configure Wicd
+     sleep 3
+     clear
+echo 'It is important that you configure wicd to autoconnect 
+to your internet connection.'
+sleep 5
+clear
+echo 'I will open the Wicd GUI for you...once you are finished 
+configuring your WiFi, close the client 
+and this script will resume again'
+sleep 5
+clear
+echo 'If you dont configure wicd, you will have no internet access'
+sleep4
+
+wicd-client -n
+
+
+sudo apt-get --yes upgrade
+
+###create runonce on login
+
+sleep 4
+clear
+
+touch /etc/xdg/autostart/PPA.desktop
+
+  echo [Desktop Entry] > /etc/xdg/autostart/PPA.desktop
+	echo Type=Application >> /etc/xdg/autostart/PPA.desktop
+	echo Name=PPA >> /etc/xdg/autostart/PPA.desktop
+	echo Exec=gnome-terminal -e /kalbuntu/files/PPA >> /etc/xdg/autostart/PPA.desktop
+
+sudo chown root:root /etc/xdg/autostart/PPA.desktop
+
+####Unlock root and setup the login screen
+
+	echo 'Unlocking the root user for this machine'
+
+sudo passwd root
+
+sudo sh -c 'echo "greeter-show-manual-login=true" >> /etc/lightdm/lightdm.conf'
+
+sleep 4
+
+	echo 'I am also setting up the root user to auto login...at the end 
+	of this full install, I will fix this or give  you the option to 
+	keep it.'
+
+sudo rm /etc/lightdm/lightdm.conf
+
+touch /etc/lightdm/lightdm.conf
+	echo [SeatDefaults] > /etc/lightdm/lightdm.conf
+	echo greeter-session=unity-greeter >>/etc/lightdm/lightdm.conf
+	echo user-session=ubuntu >>/etc/lightdm/lightdm.conf
+	echo autologin-user=root >>/etc/lightdm/lightdm.conf
+	
+sudo chown root:root /etc/lightdm/lightdm.conf
+
+
+sleep 4
+
+	echo 'Your Machine will restart in 10 seconds...'
+	echo
+	echo
+	echo
+	echo 'If you wish not to restart now please hit ctrl-c to stop'
+	echo 'This script will resume at next login'
+
+sleep 4
+clear
+	echo
+	echo kalubuntu will shut down in 10 seconds
+sleep 1
+	echo kalubuntu will shut down in 9 seconds
+sleep 1
+	echo kalubuntu will shut down in 8 seconds
+sleep 1
+	echo kalubuntu will shut down in 7 seconds
+sleep 1
+	echo kalubuntu will shut down in 6 seconds
+sleep 1
+	echo kalubuntu will shut down in 5 seconds
+sleep 1
+	echo kalubuntu will shut down in 4 seconds
+sleep 1
+	echo kalubuntu will shut down in 3 seconds
+sleep 1
+	echo kalubuntu will shut down in 2 seconds
+sleep 1
+	echo kalubuntu will shut down in 1 seconds
+sleep 1
+
+sudo reboot 
